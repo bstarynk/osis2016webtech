@@ -6,8 +6,11 @@ Slides (in LaTeX/Beamer) for OSIS2016 web technologies talk (workshop of June 28
 See  http://www.open-source-innovation-spring.org/techniques-de-programmation-web-letat-de-lart-date-conf/
 
 ## license
-These slides are under *Creative Commons Attribute ShareAlike 4.0 International licensei*. (CC-BY-SA 4.0)
+These slides are under *Creative Commons Attribute ShareAlike 4.0 International license*. (CC-BY-SA 4.0)
 see http://creativecommons.org/licenses/by-sa/4.0
+
+## building the slides
+Run `rubber -d starynkevitch-osis2016` on Linux
 
 ## author
 Basile Starynkevitch (France)

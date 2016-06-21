@@ -1,0 +1,231 @@
+\documentclass[xcolor=svgnames,final,smaller,a4]{beamer}
+% rubber: module beamer
+% rubber: module pdftex
+% rubber: module graphics
+% rubber: set program pdflatex-escape
+%% should have a script named pdflatex-escape e.g. in ~/bin/ like
+%%  #! /bin/sh -x
+%%  exec pdflatex -shell-escape $*
+%
+%
+%
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{multicol}
+\usepackage{minted}
+\usepackage{pstricks}
+\usepackage{relsize}
+\usepackage{times}
+\usepackage{alltt}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{verbatim}
+\usepackage{textcomp} % for \texttrademark
+\usepackage{wasysym} % wasysym for \smiley & \frownie{} 
+\usepackage{xspace}
+
+% wolverine beamer/themes/color/beamercolorthemewolverine.sty
+\definecolor{darkblue}{rgb}{0,0,0.8}
+
+\setbeamercolor{alerted text}{fg=darkblue!80!yellow}
+\setbeamercolor*{palette primary}{fg=darkblue!60!black,bg=yellow!85!orange}
+\setbeamercolor*{palette secondary}{fg=darkblue!70!black,bg=yellow!60!orange}
+\setbeamercolor*{palette tertiary}{bg=darkblue!80!black,fg=yellow!50!orange}
+\setbeamercolor*{palette quaternary}{fg=darkblue,bg=yellow!20!orange}
+
+\setbeamercolor*{sidebar}{fg=darkblue,bg=orange!75!white}
+
+\setbeamercolor*{palette sidebar primary}{fg=darkblue!10!black}
+\setbeamercolor*{palette sidebar secondary}{fg=white}
+\setbeamercolor*{palette sidebar tertiary}{fg=darkblue!50!black}
+\setbeamercolor*{palette sidebar quaternary}{fg=yellow!10!orange}
+
+\setbeamercolor*{titlelike}{parent=palette primary}
+\setbeamercolor{frametitle}{bg=yellow!90!orange}
+\setbeamercolor{frametitle right}{bg=yellow!60!orange}
+
+\setbeamercolor*{separation line}{fg=orange:20!nay}
+\setbeamercolor*{fine separation line}{}
+
+% AnnArbor beamer/themes/theme/beamerthemeAnnArbor.sty 
+\useinnertheme[shadow=true]{rounded}
+
+% beamer/themes/outer/beamerouterthemeinfolines.sty
+\setbeamercolor*{author in head/foot}{parent=palette tertiary}
+\setbeamercolor*{title in head/foot}{parent=palette secondary}
+\setbeamercolor*{date in head/foot}{parent=palette primary}
+
+\setbeamercolor*{section in head/foot}{parent=palette tertiary}
+\setbeamercolor*{subsection in head/foot}{parent=palette primary}
+
+\defbeamertemplate*{footline}{infolines theme}
+{
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.22\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+    \usebeamerfont{author in head/foot}\insertshortauthor
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.33\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+    \usebeamerfont{title in head/foot}\insertshorttitle
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.45\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
+    \usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}
+   {\ifthenelse{\boolean{XTRASLIDE}}{\textcolor{red}{$\spadesuit$}}{$\star$}}
+    {\scriptsize\insertframenumber{}} / {\inserttotalframenumber}\hspace*{2ex} 
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+
+\defbeamertemplate*{headline}{infolines theme}
+{
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex,right]{section in head/foot}%
+    \usebeamerfont{section in head/foot}\insertsectionhead\hspace*{2ex}
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex,left]{subsection in head/foot}%
+    \usebeamerfont{subsection in head/foot}\hspace*{2ex}\insertsubsectionhead
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+
+\setbeamersize{text margin left=1em,text margin right=1em}
+
+
+\setbeamerfont{block title}{size={}}
+\setbeamercolor{titlelike}{parent=structure,bg=yellow!85!orange}
+
+\renewcommand{\theFancyVerbLine}{\sffamily
+\textcolor{FireBrick}{\scriptsize
+\oldstylenums{\arabic{FancyVerbLine}}}}
+
+\newcommand{\petitun}[1]{{\relsize{-1}{#1}}}
+\newcommand{\prodname}[1]{\textcolor{DarkGreen}{\textsf{\relsize{-0.5}#1}}}
+\newcommand{\melt}{\prodname{Melt}\xspace}
+\newcommand{\gcc}{\prodname{Gcc}\xspace}
+\newcommand{\mailto}[1]{{\href{mailto:#1}{\small{{\texttt{#1}}}}}}
+\newcommand{\petitdemi}[1]{{\relsize{-0.5}{#1}}}
+\newcommand{\mongra}[1]{\textcolor{red}{\textbf{#1}}}
+\newcommand{\monimp}[1]{\textcolor{Purple}{\textbf{#1}}}
+\newcommand{\monbleu}[1]{\textcolor{DarkBlue}{\textbf{#1}}}
+\newcommand{\monbric}[1]{\textcolor{FireBrick}{\textbf{#1}}}
+\newcommand{\monvert}[1]{\textcolor{DarkGreen}{{#1}}}
+\newcommand{\moncomm}[1]{\monvert{\textbf{\emph{#1}}}}
+
+%%% flag for extra slides with xslide environment
+\newboolean{XTRASLIDE}
+\setboolean{XTRASLIDE}{false}
+
+\newenvironment{mslide}%
+{\setbeamercolor{normal text}{bg=yellow!10}%
+%\setbeamertemplate{footline}{\insertframenumber/\inserttotalframenumber} 
+\setbeamercolor{titlelike}{parent=structure}
+\setbeamercovered{transparent}%
+\begin{frame}[containsverbatim]}%
+{\end{frame}}
+
+\newenvironment{xslide}%
+{\setbeamercolor{normal text}{bg=red!20}%
+%\setbeamertemplate{footline}{\textcolor{red}{$\oplus$}~\insertframenumber/\inserttotalframenumber}% 
+\setbeamercolor{titlelike}{parent=structure}%
+\setbeamercovered{transparent}%
+\setboolean{XTRASLIDE}{true}%
+\begin{frame}[containsverbatim]}%
+{\end{frame}}%
+
+\newenvironment{myalltt}%
+{\begin{relsize}{-1.5}\begin{alltt}}%
+{\end{alltt}\end{relsize}}
+
+\AtBeginSection[]{\begin{mslide}\begin{relsize}{-0.5}\tableofcontents[currentsection]
+    \end{relsize}
+\end{mslide}}
+
+
+\begin{document}
+\title[metaprogramming for the Web?]{metaprogramming for the Web? \\
+  \vspace{0.2cm}
+  \small{(newbie intro to OSIS2016 \emph{``state of the art web technologies''} workshop)}}
+\author[Basile Starynkevitch]{Basile \textsc{Starynkevitch} \\
+\href{http://gcc-melt.org/}{\textcolor{Navy}{\bf\texttt{\large gcc-melt.org}}} and \href{http://starynkevitch.net/Basile/}{\textcolor{Navy}{\bf\texttt{starynkevitch.net/Basile/}}} \\
+\href{mailto:basile@starynkevitch.net}{\textcolor{Blue}{\texttt{basile@starynkevitch.net}}} 
+  or
+  \href{mailto:basile.starynkevitch@cea.fr}{\textcolor{Blue}{\texttt{basile.starynkevitch@cea.fr}}}}
+
+\institute[CEA, LIST]
+{\begin{tabular}[c]{ccc}
+\includegraphics[height=1.1cm]{CEA-LIST-logo-cote} %
+& \hspace{0.3cm}\raisebox{0.22cm}{\includegraphics[width=2.5cm]{Systematic-GT-LogicielLibre}} %
+&  \hspace{0.3cm}\raisebox{0.22cm}{\includegraphics[width=2.5cm]{logoIRILL}} \\
+  \end{tabular}\\
+  {\relsize{-0.5}{CEA, LIST (Software Reliability Lab.), Palaiseau, France}}\\
+  {\relsize{-2}{[within Université Paris Saclay]}}
+}
+
+\date[June 28\textsuperscript{th}, 2016 ~ (OSIS2016)]%
+{\small June 28\textsuperscript{th}, 2016, \\
+  \href{http://www.open-source-innovation-spring.org}{\textcolor{DarkGreen}{\emph{Open Source Innovation Spring}}}, Jussieu, Paris, France}
+
+\begin{frame}
+  \maketitle
+  
+\end{frame}
+
+
+
+ \begin{mslide}
+   \frametitle{Overview}
+   \tableofcontents
+
+   \begin{center}
+     \begin{relsize}{-1.5}
+       
+       Slides available at
+       \href{http://starynkevitch.net/Basile/starynkevitch-osis2016.pdf}{\textcolor{Navy}{\bf\texttt{starynkevitch.net/Basile/starynkevitch-osis2016.pdf}}}
+       \\ under \,
+       \raisebox{-0.2em}{\includegraphics[width=0.10\textwidth]{cc-by-sa}} \hspace{3em}
+                {\relsize{-1}{(Creative Commons Attribution Share
+                    Alike 4.0 International license)}}
+
+  \LaTeX {/} Beamer source code on \href{https://github.com/bstarynk/osis2016webtech/}{\textcolor{Brown}{\bf\texttt{github.com/bstarynk/osis2016webtech/}}}
+     \end{relsize}
+   \end{center}
+ \end{mslide}
+ 
+ \begin{xslide}
+ \begin{block}{\textcolor{Red}{\textbf{\Large Caveat}}}
+ {\Large All \textbf{opinions are mine only}} 
+ \end{block}
+ 
+ \begin{itemize}
+ \item I (Basile) don't speak for my employer, CEA (or my institute LIST)
+   \item I don't speak for Systematic or IRILL
+ \item I don't speak for the GCC community
+ \item I don't speak for anyone else
+ \item My opinions may be highly controversial
+ \item My opinions may change
+ \item \monimp{I am a web \emph{newbie}}
+   \item I use Linux (only)
+ \end{itemize}
+ 
+ \end{xslide}
+ \section{Introduction}
+
+ \begin{mslide}
+   \frametitle{Introduction ~ {\relsize{-1}{(audience)}}}
+   Expected \mongra{audience} {\relsize{-1}{(OSIS2016)}} :
+   \begin{itemize}
+   \item \monimp{developers} curious of Web technologies
+   \item \mongra{\emph{web developers}} curious on non-mainstream Web technologies
+   \item \monimp{free-software friendly} and knowledgable
+   \end{itemize}
+ \end{mslide}
+ 
+\end{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Local Variables: ;;
+%% compile-command: "rubber -d starynkevitch-osis2016" ;;
+%% End: ;;
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

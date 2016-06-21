@@ -2,4 +2,11 @@
 *%
 *.aux
 *.log
+*.nav
+*.out
+*.snm
+*.toc
+*.pdf
+_minted-starynkevitch-osis2016
+
 
