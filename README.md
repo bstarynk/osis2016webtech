@@ -10,7 +10,7 @@ These slides are under *Creative Commons Attribute ShareAlike 4.0 International 
 see http://creativecommons.org/licenses/by-sa/4.0
 
 ## building the slides
-Run `rubber -d starynkevitch-osis2016` on Linux; the resulting slides are the `starynkevitch-osis2016.pdf` file.
+Run `rubber -d starynkevitch-osis2016` on Linux; the resulting slides are the `starynkevitch-osis2016.pdf` file. See https://launchpad.net/rubber/ for more about `rubber`.
 
 ## author
 Basile Starynkevitch (France)
