@@ -179,7 +179,7 @@
    \tableofcontents
 
    \begin{center}
-     \begin{relsize}{-1.5}
+     \begin{relsize}{-2}
        
        Slides available at
        \href{http://starynkevitch.net/Basile/starynkevitch-osis2016.pdf}{\textcolor{Navy}{\bf\texttt{starynkevitch.net/Basile/starynkevitch-osis2016.pdf}}}
@@ -268,7 +268,7 @@
        \item \mongra{WebAssembly} \petitun{(2016, inspired by \texttt{PNaCl}, Google, 2011)}
    \end{itemize}}
 
-   \monimp{Web technologies evolved \emph{organically}}, no ``grand design'' \petitun{(economical \& social pressure)}
+   \monimp{Web technologies evolved \emph{organically}}, no ``grand design'' \petitun{(economical \& social pressure)}, so \mongra{complex} \& \monimp{layered}
  \end{mslide}
 
  \begin{mslide}
@@ -304,6 +304,48 @@
    \item embeddable HTTP clients (\href{http://curl.haxx.se/libcurl/}{\monvert{\bf\texttt{libcurl}}}...) \& browsers (\href{http://www.qtweb.net/}{\monbleu{\texttt{QtWeb}}}, \href{https://webkit.org/}{\monbleu{\texttt{WebKit}}}...)
    \item \href{http://fastcgi.com/}{\monvert{\bf\texttt{FastCGI}}} to connect a software to a running web server
      \item Proxies \& \href{https://en.wikipedia.org/wiki/Internet_Content_Adaptation_Protocol}{\monimp{ICAP}} \petitun{(Internet Content Adaptation Protocol, 1999)}
+   \end{itemize}
+ \end{mslide}
+
+ \section{[Meta-] programming for the web}
+ 
+ \begin{mslide}
+   \frametitle{Generating HTML}
+
+   \begin{itemize}
+   \item \mongra{PHP} \petitun{(R.Lerdorf, 1994; PHP7: 2015, faster!)}: dynamically typed interpreter
+   \item and many \monimp{other tools}, sometimes generating HTML in batch
+     \begin{itemize}
+     \item \href{http://hevea.inria.fr/}{\monvert{\bf\texttt{HeVeA}}}, a \LaTeX $~\rightarrow~$ HTML5 converter
+     \item zillions of HTML \monimp{generators}
+     \item many HTML \monimp{editors}
+     \end{itemize}
+     \item several libraries, e.g. \href{http://freemarker.org/}{\monbleu{FreeMarker}} (for Java) etc, \& ``template engines''
+   \item some interesting but dead languages: \href{https://sourceforge.net/projects/kaya/}{\monbric{Kaya}}, etc \ldots
+   \end{itemize}
+   \bigskip
+   But what about \monimp{JavaScript}?
+ \end{mslide}
+
+ \begin{mslide}
+   \frametitle{Issues in JavaScript}
+
+   Today (2016) JavaScript is \petitun{[nearly]} \monimp{the \emph{only} way to code for the browser}.
+   
+   \petitun{\small(but JavaScript was designed \& implemented in only \emph{ten days}!)}
+
+   \medskip
+   
+   JavaScript is:
+
+   \begin{itemize}
+   \item \monimp{hard} to learn \petitun{(books of 800-1000 pages)}
+   \item difficult prototype based object model ; dynamically typed
+   \item \monimp{difficult} to implement efficiently
+   \item here to stay, won't disappear soon!
+   \item \mongra{many critics} available on the web
+   \item many \monimp{frameworks} and \monimp{toolkits}
+   \item better \monimp{generated} than handwritten
    \end{itemize}
  \end{mslide}
 \end{document}
