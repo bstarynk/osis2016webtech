@@ -146,7 +146,7 @@
 \begin{document}
 \title[metaprogramming for the Web?]{metaprogramming for the Web? \\
   \vspace{0.2cm}
-  \small{(newbie intro to OSIS2016 \emph{``state of the art web technologies''} workshop)}}
+  \small{(newbie intro to \href{http://www.open-source-innovation-spring.org/techniques-de-programmation-web-letat-de-lart-date-conf/}{OSIS2016 \monbric{``state of the art web technologies''} workshop})}}
 \author[Basile Starynkevitch]{Basile \textsc{Starynkevitch} \\
 \href{http://gcc-melt.org/}{\textcolor{Navy}{\bf\texttt{\large gcc-melt.org}}} and \href{http://starynkevitch.net/Basile/}{\textcolor{Navy}{\bf\texttt{starynkevitch.net/Basile/}}} \\
 \href{mailto:basile@starynkevitch.net}{\textcolor{Blue}{\texttt{basile@starynkevitch.net}}} 
@@ -215,7 +215,10 @@
 %\end{itemize}
 %
 %\end{xslide}
- 
+
+
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  \section{Introduction}
 
  \begin{mslide}
@@ -242,7 +245,7 @@
      \item \monimp{I am still learning}, and a Web newbie!
        \item I am \mongra{old} enough \petitun{(born in 1959, grandfather)} to not have
          learned anything about the Web
-         \item I have lots of questions!
+         \item I have lots of questions! (perhaps better answered offline)
    \end{itemize}
  \end{mslide}
 
@@ -307,6 +310,9 @@
    \end{itemize}
  \end{mslide}
 
+
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  \section{[Meta-] programming for the web}
  
  \begin{mslide}
@@ -339,15 +345,137 @@
    JavaScript is:
 
    \begin{itemize}
-   \item \monimp{hard} to learn \petitun{(books of 800-1000 pages)}
+   \item \monimp{hard} to learn \petitun{(books of 800-1000 pages)} with \monimp{weird syntax \& \emph{semantics}} \footnote{~ \petitun{\monbleu{\url{https://wiki.haskell.org/The_JavaScript_Problem}}}}
    \item difficult prototype based object model ; dynamically typed
    \item \monimp{difficult} to implement efficiently
-   \item here to stay, won't disappear soon!
-   \item \mongra{many critics} available on the web
-   \item many \monimp{frameworks} and \monimp{toolkits}
+     \item have a big and \monimp{complex \emph{specification}} \petitun{(566 pages, \href{http://www.ecma-international.org/ecma-262/6.0/}{\prodname{EcmaScript$_{v6}$}}, 2015)}
+   \item here to stay, \mongra{won't disappear} soon!
+   \item \mongra{many criticisms} available on the web (and security\footnote{~ \petitun{\monbleu{\url{http://www.ssi.gouv.fr/uploads/IMG/pdf/NP_Securite_Web_NoteTech.pdf}}}, in French.\\} issues)
+   \item many \monimp{frameworks} and \monimp{toolkits} (\href{http://jquery.org/}{\prodname{JQuery}}, \ldots)
    \item better \monimp{generated} than handwritten
    \end{itemize}
  \end{mslide}
+
+ \begin{mslide}
+   \frametitle{headache with browser $\leftrightarrow$ server executions}
+   
+Som \mongra{dynamic behavior inside the web browser} is required, notably in \href{https://en.wikipedia.org/wiki/Single-page_application}{\monimp{single-page web applications}}
+   \begin{itemize}
+   \item server initialize the web page at first HTTP requests
+   \item actual content is dynamic \petitun{(JavaScript code in
+     browser handling events and modifying the DOM)}
+   \item most of the page content gets filled after \monimp{asynchronous} \prodname{AJAX} requests
+   \item
+     \href{https://en.wikipedia.org/wiki/WebSocket}{\prodname{WebSocket}}-s
+     enable \monimp{asynchrony}: the server would send some messages
+     (often JSON) to the browser
+   \end{itemize}
+   \bigskip
+   \monimp{execution \mongra{oscillates} between web server and browser}, giving motion sickness:
+   \begin{itemize}
+   \item C.Queinnec's talk {\large \mongra{Continuations \& the web}}
+   \item G.Potdevin's talk {\large \mongra{Control inversion in web development}}
+   \end{itemize}
+   \medskip
+   
+   \monimp{$\Rightarrow$} better \monimp{generate code mix} in server and browser thru \mongra{meta-programs}
+ \end{mslide}
+
+ 
+ \begin{mslide}
+   \frametitle{meta-programming the web}
+
+   Many \petitun{(non-mainstream)} tools and languages are producing code both in browser and in server:
+
+   \begin{itemize}
+     
+   \item \href{http://opalang.org/}{\prodname{Opa}} - a typesafe language for full-stack application (generates: server program for \prodname{Node.js} + browser program in \prodname{JavaScript} + database for \prodname{MongoDb})
+     
+   \item \href{http://haxe.org/}{\prodname{Haxe}} - an open source toolkit and language
+
+     \item M.Serrano's talk on \\ {\large \mongra{Mixing computation in web
+         server and in browser}}
+       (\href{http://hop.inria.fr}{\prodname{HOP}})
+
+
+     \item V.Belat's talk on \\
+       {\large \mongra{Developing multi-platform web \& mobile applications}}
+       (\href{http://ocsigen.org/}{\prodname{Ocsigen}})
+       
+   \end{itemize}
+   
+ \end{mslide}
+
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \section{A few newbie technical questions}
+
+
+ \begin{mslide}
+   \frametitle{is \monbric{\texttt{contenteditable}} useful?}
+
+   \petitun{(in the context of some ``syntax directed editor'' or ``AST wiki'')}
+
+   \bigskip
+
+   
+   See \href{https://medium.engineering/why-contenteditable-is-terrible-122d8a40e480}
+        {\monbleu{why is \monbric{\texttt{contenteditable}} terrible?}} \petitun{(N.Santos, Medium, 2014)}
+
+        \medskip
+        
+   \hrule
+   
+   \bigskip
+        \begin{itemize}
+        \item how to disambiguate cursor position \\
+          \petitun{\bf\texttt{\mongra{\large$\mid$}<em><a href='http://example.com/'>some link</a> here</em>}} \\
+          vs \\
+          \petitun{\bf\texttt{<em>\mongra{\large$\mid$}<a href='http://example.com/'>some link</a> here</em>}}
+
+
+        \item \monimp{exhaustive} list of user actions and events modifying the editable element? Relation to \monbric{\texttt{execCommand}}?
+
+        \item W3C Editor's draft {\relsize{-2}{\monbleu{\url{https://w3c.github.io/editing/contentEditable.html}}}} - dream or \petitun{\monbric{\texttt{contenteditable='events'}}} soon implemented?
+
+        \item \monbric{\texttt{beforeinput}} \& \monbric{\texttt{input}} events?
+          
+        \end{itemize}
+        
+ \end{mslide}
+
+ \begin{mslide}
+   \frametitle{dealing with the clipboard (copy \& paste)}
+
+   Traditional (e.g X11
+   \href{https://specifications.freedesktop.org/wm-spec/wm-spec-latest.html}{\monbric{EWMH}}
+   - \petitun{Extended Window Manager Hints}) clipboard involves a
+   \emph{negotiation} on the exchange format or MIME type
+   \petitun{(plain text, rich text, image, HTML, \ldots)}. So copying \& pasting
+   some web page fragment to LibreOffice preserves italics, but
+   copying the same to a terminal only sends text.
+
+   \begin{block}{exchanging structured data}
+
+     Could two similar web applications exchange e.g. JSON data during copy \& paste ? How?
+   \end{block}
+   
+ \end{mslide}
+ 
+ \begin{mslide}
+   \frametitle{Security issues?}
+
+   \begin{block}{need of better static analysis tools?}
+
+     Is there a need (\& a ``market'') for open source static analysis tools for Web programming languages?
+     
+   \end{block}
+
+   \bigskip
+
+   \petitun{(perhaps security is not relevant enough on the web \ldots)}
+ \end{mslide}
+ 
 \end{document}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
